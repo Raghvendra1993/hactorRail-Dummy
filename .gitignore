@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.local
+*.log
+dist/
+.next/
+build/
+.strapi/
+.tmp/
+.cache/
+public/uploads/

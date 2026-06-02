@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(nvs use 18)",
+      "PowerShell(npx create-strapi-app@5.30.1 --help 2>&1)",
+      "Bash(curl -s \"https://hectorrail.netlify.app/assets/index-CPSmhtDF.js\")"
+    ]
+  }
+}
