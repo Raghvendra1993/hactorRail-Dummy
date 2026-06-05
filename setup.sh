@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================
 #  HectorRail — Full-Stack Setup Script
-#  Angular 17 + Strapi 4 + PostgreSQL + NVM
+#  Next.js 15 + Strapi 5 + PostgreSQL + NVS
 # =============================================================
 set -e
 
@@ -22,115 +22,73 @@ echo -e "${BLUE}║     HectorRail Setup Script          ║${NC}"
 echo -e "${BLUE}╚══════════════════════════════════════╝${NC}"
 echo ""
 
-# ── 1. NVM ────────────────────────────────────────────────────
-info "Checking NVM..."
-export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
-
-if [ ! -s "$NVM_DIR/nvm.sh" ]; then
-  warn "NVM not found. Installing NVM v0.39.7..."
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  success "NVM installed"
+# ── 1. Node via NVS ──────────────────────────────────────────
+info "Checking NVS..."
+if command -v nvs &>/dev/null; then
+  nvs use 18
+  success "Node $(node -v) active via NVS"
 else
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  success "NVM already installed: $(nvm --version)"
+  warn "NVS not found. Install NVS from https://github.com/jasongin/nvs"
+  error "Please install NVS and Node 18 first."
 fi
 
-# ── 2. Node 18 ───────────────────────────────────────────────
-info "Switching to Node 18 (LTS)..."
-nvm install 18
-nvm use 18
-nvm alias default 18
-success "Node $(node -v) active"
-
-# ── 3. PostgreSQL check ───────────────────────────────────────
+# ── 2. PostgreSQL check ───────────────────────────────────────
 info "Checking PostgreSQL..."
 if command -v psql &>/dev/null; then
   PG_VERSION=$(psql --version | awk '{print $3}')
   success "PostgreSQL $PG_VERSION found"
-  
+
   info "Creating database and user..."
   psql -U postgres <<-SQL 2>/dev/null || warn "DB may already exist — continuing."
-    CREATE USER hectorrail_user WITH PASSWORD 'hectorrail_pass';
-    CREATE DATABASE hectorrail OWNER hectorrail_user;
-    GRANT ALL PRIVILEGES ON DATABASE hectorrail TO hectorrail_user;
+    CREATE USER strapi WITH PASSWORD 'strapi_password';
+    CREATE DATABASE strapi OWNER strapi;
+    GRANT ALL PRIVILEGES ON DATABASE strapi TO strapi;
 SQL
   success "Database ready"
 else
-  warn "psql not found. Trying Docker Compose fallback..."
-  if command -v docker-compose &>/dev/null || command -v docker &>/dev/null; then
-    info "Starting PostgreSQL via Docker Compose..."
-    docker-compose up -d postgres
-    info "Waiting for PostgreSQL to be ready..."
-    sleep 8
-    success "PostgreSQL running via Docker"
-  else
-    error "Neither psql nor Docker found. Install PostgreSQL or Docker first."
-  fi
+  warn "psql not found. Make sure PostgreSQL is installed and running."
 fi
 
-# ── 4. Backend (Strapi) ───────────────────────────────────────
+# ── 3. Backend (Strapi) ───────────────────────────────────────
 echo ""
 info "Setting up Strapi backend..."
 cd backend
 
-if [ ! -f .env ]; then
-  cp .env.example .env
-  # Generate random secrets
-  APP_KEYS=$(node -e "const c=require('crypto');console.log([1,2,3,4].map(()=>c.randomBytes(16).toString('base64')).join(','))")
-  JWT_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
-  ADMIN_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
-  TOKEN_SALT=$(node -e "console.log(require('crypto').randomBytes(16).toString('base64'))")
-  TRANSFER_SALT=$(node -e "console.log(require('crypto').randomBytes(16).toString('base64'))")
-
-  # Replace placeholder values in .env
-  sed -i.bak "s|toBeModified1,toBeModified2,toBeModified3,toBeModified4|$APP_KEYS|g" .env
-  sed -i.bak "s|JWT_SECRET=tobemodified|JWT_SECRET=$JWT_SECRET|g" .env
-  sed -i.bak "s|ADMIN_JWT_SECRET=tobemodified|ADMIN_JWT_SECRET=$ADMIN_SECRET|g" .env
-  sed -i.bak "s|API_TOKEN_SALT=tobemodified|API_TOKEN_SALT=$TOKEN_SALT|g" .env
-  sed -i.bak "s|TRANSFER_TOKEN_SALT=tobemodified|TRANSFER_TOKEN_SALT=$TRANSFER_SALT|g" .env
-  rm -f .env.bak
-  success ".env created with secure random secrets"
-fi
-
-info "Installing backend dependencies (this may take a minute)..."
-npm install --legacy-peer-deps
+info "Installing backend dependencies..."
+npm install
 success "Backend dependencies installed"
 
 cd ..
 
-# ── 5. Frontend (Angular) ─────────────────────────────────────
+# ── 4. Frontend (Next.js) ────────────────────────────────────
 echo ""
-info "Setting up Angular frontend..."
+info "Setting up Next.js frontend..."
 cd frontend
 
-info "Installing Angular CLI globally..."
-npm install -g @angular/cli@17 --quiet
-
 info "Installing frontend dependencies..."
-npm install --legacy-peer-deps
+npm install
 success "Frontend dependencies installed"
 
 cd ..
 
-# ── 6. Done ───────────────────────────────────────────────────
+# ── 5. Done ───────────────────────────────────────────────────
 echo ""
 echo -e "${GREEN}╔══════════════════════════════════════════════╗${NC}"
 echo -e "${GREEN}║   ✅  HectorRail Setup Complete!             ║${NC}"
 echo -e "${GREEN}╚══════════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "  ${YELLOW}Start the backend (Strapi):${NC}"
-echo -e "    cd backend && nvm use 18 && npm run develop"
+echo -e "    cd backend && nvs use 18 && npm run develop"
 echo ""
-echo -e "  ${YELLOW}Start the frontend (Angular):${NC}"
-echo -e "    cd frontend && nvm use 18 && ng serve"
+echo -e "  ${YELLOW}Start the frontend (Next.js):${NC}"
+echo -e "    cd frontend && nvs use 18 && npm run dev"
 echo ""
 echo -e "  ${YELLOW}URLs:${NC}"
-echo -e "    App:         ${BLUE}http://localhost:4200${NC}"
-echo -e "    Strapi API:  ${BLUE}http://localhost:1337/api${NC}"
-echo -e "    Admin panel: ${BLUE}http://localhost:1337/admin${NC}"
+echo -e "    App:          ${BLUE}http://localhost:3000${NC}"
+echo -e "    Strapi API:   ${BLUE}http://localhost:1337/api${NC}"
+echo -e "    Admin panel:  ${BLUE}http://localhost:1337/admin${NC}"
 echo ""
 echo -e "  ${YELLOW}First run:${NC} Strapi will ask you to create an admin account."
-echo -e "  Then go to Settings → Roles → Public and enable train/booking endpoints."
+echo -e "  Then go to Settings → Roles → Public and enable find/findOne"
+echo -e "  for Article, Author, and Category content types."
 echo ""

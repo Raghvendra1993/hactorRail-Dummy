@@ -1,59 +1,60 @@
-# HectorRail Clone
+# HectorRail
 
-Full-stack train booking application built with:
-- **Frontend**: Angular 17
-- **Backend**: Strapi v4
+JAMstack web application built with:
+- **Frontend**: Next.js 15 + React 19 + Tailwind CSS + Framer Motion
+- **CMS**: Strapi 5 (Headless CMS)
 - **Database**: PostgreSQL
-- **Node Version Manager**: NVM
+- **Node Version Manager**: NVS
 
 ## Prerequisites
 
-- NVM (Node Version Manager)
-- PostgreSQL 14+
+- NVS (Node Version Switcher)
+- PostgreSQL
 - Git
 
 ## Quick Start
 
-### 1. Install NVM & Node
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-source ~/.nvm/nvm.sh
-nvm install 18
-nvm use 18
+### 1. Install Node via NVS
+```powershell
+nvs use 18
 ```
 
-### 2. Setup PostgreSQL
-```bash
-# Create database
-psql -U postgres -c "CREATE DATABASE hectorrail;"
-psql -U postgres -c "CREATE USER hectorrail_user WITH PASSWORD 'hectorrail_pass';"
-psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE hectorrail TO hectorrail_user;"
-```
-
-### 3. Setup Backend (Strapi)
-```bash
+### 2. Start Backend (Strapi CMS)
+```powershell
 cd backend
-cp .env.example .env
-# Edit .env with your DB credentials
 npm install
 npm run develop
 ```
 Strapi Admin: http://localhost:1337/admin
 
-### 4. Setup Frontend (Angular)
-```bash
+### 3. Start Frontend (Next.js)
+```powershell
 cd frontend
-nvm use 18
-npm install -g @angular/cli@17
 npm install
-ng serve
+npm run dev
 ```
-App: http://localhost:4200
+App: http://localhost:3000
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 15, React 19, Tailwind CSS, Framer Motion |
+| CMS / API | Strapi 5.30 |
+| Database | PostgreSQL |
+| Runtime | Node.js 18 (via NVS) |
+
+## Architecture (JAMstack)
+
+```
+PostgreSQL → Strapi REST API → Next.js ISR → Static HTML → Browser
+```
 
 ## Features
-- Train search (origin, destination, date, passengers)
-- Real-time train results with pricing
-- Seat selection & booking flow
-- User authentication
-- Booking management
-- Responsive mobile-first design
+- Cinematic hero section with train imagery
+- Services: System Transport, Timber, Wagon Load, Intermodal
+- Live blog/news articles from Strapi CMS
+- Contact form
+- Sustainability section
+- Careers section
+- Fully responsive + animated (Framer Motion)
