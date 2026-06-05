@@ -1,3 +1,6 @@
+'use client';
+import { motion } from 'framer-motion';
+
 const services = [
   {
     tag: 'SYSTEM TRANSPORT',
@@ -20,8 +23,8 @@ const services = [
   {
     tag: 'INTERMODAL',
     title: 'Seamless\nMulti-Modal Logistics.',
-    desc: 'Combining rail and road for maximum efficiency and sustainability. Your Container. Our Network.',
-    features: ['Terminal-to-Terminal', 'Unified Logistics', 'CO2 Reduction'],
+    desc: 'Combining rail and road for maximum efficiency. Your Container. Our Network.',
+    features: ['Terminal-to-Terminal', 'Unified Logistics', 'CO₂ Reduction'],
   },
 ];
 
@@ -30,38 +33,56 @@ export default function ServicesSection() {
     <section id="services" className="bg-brand-dark py-32">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
-          <p className="section-label">What We Do</p>
-          <h2 className="font-display font-black text-4xl md:text-6xl text-white uppercase leading-tight max-w-2xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="section-label"
+          >
+            What We Do
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-display font-black text-4xl md:text-6xl text-white uppercase leading-tight max-w-2xl"
+          >
             Built Around<br />Your Cargo
-          </h2>
+          </motion.h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-px bg-white/10">
-          {services.map((s) => (
-            <div
+          {services.map((s, i) => (
+            <motion.div
               key={s.tag}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
               className="group bg-brand-dark p-10 md:p-12 hover:bg-brand-near-black transition-colors duration-300 cursor-pointer"
             >
-              <p className="text-xs font-medium tracking-widest uppercase text-brand-yellow/70 mb-6 group-hover:text-brand-yellow transition-colors">
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-brand-yellow/60 mb-6 group-hover:text-brand-yellow transition-colors">
                 {s.tag}
               </p>
               <h3 className="font-display font-bold text-2xl md:text-3xl text-white mb-4 whitespace-pre-line leading-tight">
                 {s.title}
               </h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-8">{s.desc}</p>
-              <ul className="space-y-2">
+              <p className="text-white/40 text-sm leading-relaxed mb-8">{s.desc}</p>
+              <ul className="space-y-2 mb-8">
                 {s.features.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-white/60">
+                  <li key={f} className="flex items-center gap-3 text-sm text-white/50">
                     <span className="w-1 h-1 bg-brand-yellow rounded-full flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 flex items-center gap-2 text-sm font-medium text-white/40 group-hover:text-brand-yellow transition-colors">
+              <div className="flex items-center gap-2 text-sm font-medium text-white/30 group-hover:text-brand-yellow transition-colors">
                 <span>View all solutions</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -497,6 +497,60 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
+  collectionName: 'bookings';
+  info: {
+    description: 'Train ticket bookings';
+    displayName: 'Booking';
+    pluralName: 'bookings';
+    singularName: 'booking';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bookingReference: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    contactEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    contactPhone: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'EUR'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::booking.booking'
+    > &
+      Schema.Attribute.Private;
+    passengers: Schema.Attribute.JSON & Schema.Attribute.Required;
+    paymentStatus: Schema.Attribute.Enumeration<
+      ['unpaid', 'paid', 'refunded']
+    > &
+      Schema.Attribute.DefaultTo<'unpaid'>;
+    publishedAt: Schema.Attribute.DateTime;
+    seats: Schema.Attribute.JSON;
+    selectedClass: Schema.Attribute.Enumeration<['first', 'second']> &
+      Schema.Attribute.DefaultTo<'second'>;
+    specialRequests: Schema.Attribute.Text;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'confirmed', 'cancelled', 'completed']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    totalPrice: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    train: Schema.Attribute.Relation<'manyToOne', 'api::train.train'>;
+    travelDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -521,6 +575,49 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTrainTrain extends Struct.CollectionTypeSchema {
+  collectionName: 'trains';
+  info: {
+    description: 'Train routes and schedules';
+    displayName: 'Train';
+    pluralName: 'trains';
+    singularName: 'train';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amenities: Schema.Attribute.JSON;
+    arrivalTime: Schema.Attribute.Time & Schema.Attribute.Required;
+    classes: Schema.Attribute.JSON;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    departureTime: Schema.Attribute.Time & Schema.Attribute.Required;
+    destination: Schema.Attribute.String & Schema.Attribute.Required;
+    duration: Schema.Attribute.Integer & Schema.Attribute.Required;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::train.train'> &
+      Schema.Attribute.Private;
+    operatingDays: Schema.Attribute.JSON;
+    origin: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    stops: Schema.Attribute.JSON;
+    trainName: Schema.Attribute.String & Schema.Attribute.Required;
+    trainNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    trainType: Schema.Attribute.Enumeration<
+      ['IC', 'EC', 'ICE', 'Regional', 'Night']
+    > &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1039,7 +1136,9 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::booking.booking': ApiBookingBooking;
       'api::category.category': ApiCategoryCategory;
+      'api::train.train': ApiTrainTrain;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

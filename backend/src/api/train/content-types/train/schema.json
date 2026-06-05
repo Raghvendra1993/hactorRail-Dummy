@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trains",
+  "info": {
+    "singularName": "train",
+    "pluralName": "trains",
+    "displayName": "Train",
+    "description": "Train routes and schedules"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "trainNumber": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "trainName": {
+      "type": "string",
+      "required": true
+    },
+    "trainType": {
+      "type": "enumeration",
+      "enum": ["IC", "EC", "ICE", "Regional", "Night"],
+      "required": true
+    },
+    "origin": {
+      "type": "string",
+      "required": true
+    },
+    "destination": {
+      "type": "string",
+      "required": true
+    },
+    "departureTime": {
+      "type": "time",
+      "required": true
+    },
+    "arrivalTime": {
+      "type": "time",
+      "required": true
+    },
+    "duration": {
+      "type": "integer",
+      "required": true
+    },
+    "stops": {
+      "type": "json"
+    },
+    "classes": {
+      "type": "json"
+    },
+    "amenities": {
+      "type": "json"
+    },
+    "operatingDays": {
+      "type": "json"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bookings",
+  "info": {
+    "singularName": "booking",
+    "pluralName": "bookings",
+    "displayName": "Booking",
+    "description": "Train ticket bookings"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "bookingReference": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "train": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::train.train"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "travelDate": {
+      "type": "date",
+      "required": true
+    },
+    "passengers": {
+      "type": "json",
+      "required": true
+    },
+    "selectedClass": {
+      "type": "enumeration",
+      "enum": ["first", "second"],
+      "default": "second"
+    },
+    "seats": {
+      "type": "json"
+    },
+    "totalPrice": {
+      "type": "decimal",
+      "required": true
+    },
+    "currency": {
+      "type": "string",
+      "default": "EUR"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "confirmed", "cancelled", "completed"],
+      "default": "pending"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": ["unpaid", "paid", "refunded"],
+      "default": "unpaid"
+    },
+    "contactEmail": {
+      "type": "email",
+      "required": true
+    },
+    "contactPhone": {
+      "type": "string"
+    },
+    "specialRequests": {
+      "type": "text"
+    }
+  }
+}
