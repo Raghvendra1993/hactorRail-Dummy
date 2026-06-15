@@ -1,26 +1,31 @@
 'use client';
 import { motion } from 'framer-motion';
+import type { Service } from '@/lib/strapi';
 
-const services = [
+const FALLBACK: Service[] = [
   {
+    id: 1, documentId: '', order: 0,
     tag: 'SYSTEM TRANSPORT',
     title: 'Dedicated Capacity.\nNo Compromise.',
     desc: 'Your consist. Your schedule. No shared trains, no delays caused by other cargo. Full dedicated trains built around your volume.',
     features: ['Direct Point-to-Point Routes', 'Customized Schedules', 'Dedicated Full Trains'],
   },
   {
+    id: 2, documentId: '', order: 1,
     tag: 'TIMBER',
     title: 'The Backbone of\nthe Timber Industry.',
     desc: 'Specialized equipment and expertise for the forestry sector. Direct delivery to sawmills, paper mills, or export terminals.',
     features: ['Specialized Timber Wagons', 'Direct to Sawmills', 'Cross-Border Operation'],
   },
   {
+    id: 3, documentId: '', order: 2,
     tag: 'WAGON LOAD',
     title: 'Scalable Solutions\nfor Any Volume.',
     desc: 'Whether you have a single wagon or a growing volume, we provide the flexibility you need to scale your rail logistics.',
     features: ['Scalable Solutions', 'Any Volume', 'Diverse Wagon Types'],
   },
   {
+    id: 4, documentId: '', order: 3,
     tag: 'INTERMODAL',
     title: 'Seamless\nMulti-Modal Logistics.',
     desc: 'Combining rail and road for maximum efficiency. Your Container. Our Network.',
@@ -28,7 +33,9 @@ const services = [
   },
 ];
 
-export default function ServicesSection() {
+export default function ServicesSection({ services = [] }: { services?: Service[] }) {
+  const items = services.length > 0 ? services : FALLBACK;
+
   return (
     <section id="services" className="bg-brand-dark py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -54,9 +61,9 @@ export default function ServicesSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-px bg-white/10">
-          {services.map((s, i) => (
+          {items.map((s, i) => (
             <motion.div
-              key={s.tag}
+              key={s.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
@@ -70,14 +77,16 @@ export default function ServicesSection() {
                 {s.title}
               </h3>
               <p className="text-white/40 text-sm leading-relaxed mb-8">{s.desc}</p>
-              <ul className="space-y-2 mb-8">
-                {s.features.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-white/50">
-                    <span className="w-1 h-1 bg-brand-yellow rounded-full flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
+              {s.features && s.features.length > 0 && (
+                <ul className="space-y-2 mb-8">
+                  {s.features.map((f) => (
+                    <li key={f} className="flex items-center gap-3 text-sm text-white/50">
+                      <span className="w-1 h-1 bg-brand-yellow rounded-full flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              )}
               <div className="flex items-center gap-2 text-sm font-medium text-white/30 group-hover:text-brand-yellow transition-colors">
                 <span>View all solutions</span>
                 <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>

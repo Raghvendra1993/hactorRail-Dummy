@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker --version)",
+      "PowerShell(docker --version 2>&1)",
+      "PowerShell(netstat -ano)",
+      "PowerShell(Get-Process node -ErrorAction SilentlyContinue)",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -TimeoutSec 5 -UseBasicParsing; \"FE Status: $\\($r.StatusCode\\)\" } catch { \"FE Error: $_\" })",
+      "PowerShell(Get-Process -Id 6044 -ErrorAction SilentlyContinue)",
+      "Read(//c/Program Files/PostgreSQL/**)"
+    ],
+    "additionalDirectories": [
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\stat\\content-types\\stat",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\service\\content-types\\service",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\cargo-type\\content-types\\cargo-type",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\principle\\content-types\\principle",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\testimonial\\content-types\\testimonial",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\job-opening\\content-types\\job-opening",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\stat\\controllers",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\stat\\routes",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\stat\\services",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\service\\controllers",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\service\\routes",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\service\\services",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\cargo-type\\controllers",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\cargo-type\\routes",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\cargo-type\\services",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\principle\\controllers",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\principle\\routes",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\principle\\services",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\testimonial\\controllers",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\testimonial\\routes",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\testimonial\\services",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\job-opening\\controllers",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\job-opening\\routes",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend\\src\\api\\job-opening\\services",
+      "d:\\Hector Rail\\hactorRail-Dummy\\backend",
+      "d:\\Hector Rail\\hactorRail-Dummy"
+    ]
+  }
+}

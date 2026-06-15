@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getArticles, getStrapiImageUrl, Article } from '@/lib/strapi';
+import { getStrapiImageUrl, type Article } from '@/lib/strapi';
 
 function ArticleCard({ article }: { article: Article }) {
   const coverUrl = getStrapiImageUrl(article.cover);
@@ -49,14 +49,8 @@ function ArticleCard({ article }: { article: Article }) {
   );
 }
 
-export default async function NewsSection() {
-  let articles: Article[] = [];
-  try {
-    articles = await getArticles();
-    articles = articles.slice(0, 3);
-  } catch {
-    // Strapi not available yet
-  }
+export default function NewsSection({ articles = [] }: { articles?: Article[] }) {
+  const items = articles.slice(0, 3);
 
   return (
     <section id="news" className="bg-brand-dark py-32">
@@ -77,9 +71,9 @@ export default async function NewsSection() {
           </Link>
         </div>
 
-        {articles.length > 0 ? (
+        {items.length > 0 ? (
           <div className="grid md:grid-cols-3 gap-6">
-            {articles.map((article) => (
+            {items.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </div>
@@ -88,7 +82,7 @@ export default async function NewsSection() {
             <p className="text-white/30 text-sm mb-2">No articles published yet.</p>
             <p className="text-white/20 text-xs">
               Add articles in the{' '}
-              <a href="http://localhost:1337/admin" target="_blank" className="text-brand-yellow underline">
+              <a href="http://localhost:1337/admin" target="_blank" rel="noopener noreferrer" className="text-brand-yellow underline">
                 Strapi Admin
               </a>
             </p>

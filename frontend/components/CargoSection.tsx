@@ -1,16 +1,19 @@
 'use client';
 import { motion } from 'framer-motion';
+import type { CargoType } from '@/lib/strapi';
 
-const cargo = [
-  { name: 'Timber', icon: '🌲', desc: 'Specialized forestry logistics from forest to mill.' },
-  { name: 'Steel', icon: '⚙️', desc: 'Heavy industry transport with dedicated wagons.' },
-  { name: 'Chemicals', icon: '🧪', desc: 'Safe, certified chemical cargo handling.' },
-  { name: 'Coal', icon: '⛏️', desc: 'High-volume bulk mineral transport.' },
-  { name: 'Stone', icon: '🪨', desc: 'Aggregates and construction materials.' },
-  { name: 'Agricultural', icon: '🌾', desc: 'Grain and agricultural product transport.' },
+const FALLBACK: CargoType[] = [
+  { id: 1, documentId: '', order: 0, name: 'Timber', icon: '🌲', desc: 'Specialized forestry logistics from forest to mill.' },
+  { id: 2, documentId: '', order: 1, name: 'Steel', icon: '⚙️', desc: 'Heavy industry transport with dedicated wagons.' },
+  { id: 3, documentId: '', order: 2, name: 'Chemicals', icon: '🧪', desc: 'Safe, certified chemical cargo handling.' },
+  { id: 4, documentId: '', order: 3, name: 'Coal', icon: '⛏️', desc: 'High-volume bulk mineral transport.' },
+  { id: 5, documentId: '', order: 4, name: 'Stone', icon: '🪨', desc: 'Aggregates and construction materials.' },
+  { id: 6, documentId: '', order: 5, name: 'Agricultural', icon: '🌾', desc: 'Grain and agricultural product transport.' },
 ];
 
-export default function CargoSection() {
+export default function CargoSection({ cargoTypes = [] }: { cargoTypes?: CargoType[] }) {
+  const items = cargoTypes.length > 0 ? cargoTypes : FALLBACK;
+
   return (
     <section id="about" className="bg-brand-dark py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -61,18 +64,18 @@ export default function CargoSection() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            {cargo.map((item, i) => (
+            {items.map((item, i) => (
               <motion.div
-                key={item.name}
+                key={item.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 className="group bg-brand-near-black border border-white/5 p-6 hover:border-brand-yellow/30 transition-all duration-300"
               >
-                <span className="text-2xl mb-3 block">{item.icon}</span>
+                {item.icon && <span className="text-2xl mb-3 block">{item.icon}</span>}
                 <h3 className="font-display font-bold text-white mb-1">{item.name}</h3>
-                <p className="text-xs text-white/30 leading-relaxed">{item.desc}</p>
+                {item.desc && <p className="text-xs text-white/30 leading-relaxed">{item.desc}</p>}
               </motion.div>
             ))}
           </div>

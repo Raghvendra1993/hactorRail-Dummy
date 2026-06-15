@@ -1,14 +1,17 @@
 'use client';
 import { motion } from 'framer-motion';
+import type { Testimonial } from '@/lib/strapi';
 
-const testimonials = [
+const FALLBACK: Testimonial[] = [
   {
+    id: 1, documentId: '', order: 0,
     quote: 'A partner that understands base industry needs. Their dedicated system trains have optimized our volume flow significantly.',
     author: 'Anders Lindgren',
     role: 'Logistics Director',
     company: 'Stora Enso',
   },
   {
+    id: 2, documentId: '', order: 1,
     quote: 'This successful operation shows that Hector Rail has the expertise and capability to run longer trains on the Swedish network.',
     author: 'SCA Logistics',
     role: 'Supply Chain Manager',
@@ -16,7 +19,9 @@ const testimonials = [
   },
 ];
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({ testimonials = [] }: { testimonials?: Testimonial[] }) {
+  const items = testimonials.length > 0 ? testimonials : FALLBACK;
+
   return (
     <section className="bg-brand-dark py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -43,16 +48,16 @@ export default function TestimonialsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {testimonials.map((t, i) => (
+          {items.map((t, i) => (
             <motion.div
-              key={t.author}
+              key={t.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
               className="bg-brand-near-black border border-white/10 p-10 hover:border-brand-yellow/20 transition-colors group"
             >
-              <div className="text-brand-yellow text-5xl font-serif mb-6 opacity-30 leading-none">"</div>
+              <div className="text-brand-yellow text-5xl font-serif mb-6 opacity-30 leading-none">&quot;</div>
               <p className="text-white/60 text-lg leading-relaxed mb-8 italic">{t.quote}</p>
               <div className="flex items-center gap-4 pt-6 border-t border-white/10">
                 <div className="w-10 h-10 bg-brand-yellow/20 rounded-full flex items-center justify-center flex-shrink-0">

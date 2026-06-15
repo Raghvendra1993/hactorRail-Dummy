@@ -1,21 +1,24 @@
 'use client';
 import { motion } from 'framer-motion';
+import type { Stat } from '@/lib/strapi';
 
-const stats = [
-  { value: '20+', label: 'Years on the Rails', sub: 'Since 2004' },
-  { value: '14', label: 'Daily Corridor Departures', sub: 'Sweden ↔ Germany' },
-  { value: '70%', label: 'CO₂ Reduction', sub: 'Compared to road freight' },
-  { value: '100%', label: 'Zero Direct Emissions', sub: 'Electric traction fleet' },
+const FALLBACK: Stat[] = [
+  { id: 1, documentId: '', value: '20+', label: 'Years on the Rails', sub: 'Since 2004', order: 0 },
+  { id: 2, documentId: '', value: '14', label: 'Daily Corridor Departures', sub: 'Sweden ↔ Germany', order: 1 },
+  { id: 3, documentId: '', value: '70%', label: 'CO₂ Reduction', sub: 'Compared to road freight', order: 2 },
+  { id: 4, documentId: '', value: '100%', label: 'Zero Direct Emissions', sub: 'Electric traction fleet', order: 3 },
 ];
 
-export default function StatsSection() {
+export default function StatsSection({ stats = [] }: { stats?: Stat[] }) {
+  const items = stats.length > 0 ? stats : FALLBACK;
+
   return (
     <section className="bg-brand-near-black border-y border-white/5 py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-          {stats.map((stat, i) => (
+          {items.map((stat, i) => (
             <motion.div
-              key={stat.label}
+              key={stat.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

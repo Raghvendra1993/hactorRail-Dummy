@@ -1,13 +1,32 @@
 'use client';
 import { motion } from 'framer-motion';
+import type { JobOpening, SiteSettings } from '@/lib/strapi';
 
-const roles = [
-  { title: 'Train Driver', location: 'Stockholm, Sweden', type: 'Full-time' },
-  { title: 'Shunting Driver', location: 'Bochum, Germany', type: 'Full-time' },
-  { title: 'Communications Director', location: 'Danderyd, Sweden', type: 'Full-time' },
+const FALLBACK: JobOpening[] = [
+  { id: 1, documentId: '', order: 0, title: 'Train Driver', location: 'Stockholm, Sweden', employmentType: 'Full-time', description: null, applyUrl: null, isActive: true },
+  { id: 2, documentId: '', order: 1, title: 'Shunting Driver', location: 'Bochum, Germany', employmentType: 'Full-time', description: null, applyUrl: null, isActive: true },
+  { id: 3, documentId: '', order: 2, title: 'Communications Director', location: 'Danderyd, Sweden', employmentType: 'Full-time', description: null, applyUrl: null, isActive: true },
 ];
 
-export default function CareersSection() {
+const FALLBACK_BENEFITS = [
+  'Comprehensive health care and wellness allowances',
+  'Short decision paths and a flat hierarchy',
+  'Internal training programs and certifications',
+  'Directly contribute to sustainable European logistics',
+];
+
+export default function CareersSection({
+  jobOpenings = [],
+  siteSettings,
+}: {
+  jobOpenings?: JobOpening[];
+  siteSettings?: SiteSettings | null;
+}) {
+  const roles = jobOpenings.length > 0 ? jobOpenings : FALLBACK;
+  const benefits = siteSettings?.careerBenefits?.length
+    ? siteSettings.careerBenefits
+    : FALLBACK_BENEFITS;
+
   return (
     <section id="careers" className="bg-brand-near-black py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-brand-yellow/5 to-transparent pointer-events-none" />
@@ -43,25 +62,21 @@ export default function CareersSection() {
             >
               Become part of a welcoming and safe workplace where we challenge the status quo of rail freight. We offer a modern fleet and a culture built on expertise and reliability.
             </motion.p>
-            <motion.ul
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="space-y-3 mb-10"
             >
-              {[
-                'Comprehensive health care and wellness allowances',
-                'Short decision paths and a flat hierarchy',
-                'Internal training programs and certifications',
-                'Directly contribute to sustainable European logistics',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm text-white/50">
-                  <span className="w-1.5 h-1.5 bg-brand-yellow rounded-full mt-1.5 flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </motion.ul>
+              <ul className="space-y-3 mb-10">
+                {benefits.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-white/50">
+                    <span className="w-1.5 h-1.5 bg-brand-yellow rounded-full mt-1.5 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
             <motion.a
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -85,8 +100,9 @@ export default function CareersSection() {
               Open Positions
             </motion.p>
             {roles.map((role, i) => (
-              <motion.div
-                key={role.title}
+              <motion.a
+                key={role.id}
+                href={role.applyUrl ?? '#contact'}
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -97,10 +113,12 @@ export default function CareersSection() {
                   <h3 className="font-display font-bold text-white group-hover:text-brand-yellow transition-colors duration-300">
                     {role.title}
                   </h3>
-                  <p className="text-xs text-white/30 mt-1">{role.location} · {role.type}</p>
+                  <p className="text-xs text-white/30 mt-1">
+                    {role.location && `${role.location} · `}{role.employmentType}
+                  </p>
                 </div>
                 <span className="text-white/20 group-hover:text-brand-yellow group-hover:translate-x-1 transition-all duration-300 text-xl">→</span>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </div>

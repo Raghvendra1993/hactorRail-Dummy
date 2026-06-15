@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { SiteSettings } from '@/lib/strapi';
 
 const footerLinks = {
   Services: ['System Transport', 'Timber Transport', 'Wagon Load', 'Intermodal'],
@@ -6,7 +7,17 @@ const footerLinks = {
   Resources: ['News', 'Sustainability Report', 'Cookie Policy', 'Contact'],
 };
 
-export default function Footer() {
+const FALLBACK_DESCRIPTION = 'Connecting Sweden and Germany with sustainable, high-performance logistics since 2004.';
+
+export default function Footer({ siteSettings }: { siteSettings?: SiteSettings | null }) {
+  const description = siteSettings?.companyDescription ?? FALLBACK_DESCRIPTION;
+
+  const socials = [
+    { key: 'in',  href: siteSettings?.socialLinkedIn  ?? '#', label: 'LinkedIn' },
+    { key: 'tw',  href: siteSettings?.socialTwitter   ?? '#', label: 'Twitter' },
+    { key: 'fb',  href: siteSettings?.socialFacebook  ?? '#', label: 'Facebook' },
+  ];
+
   return (
     <footer className="bg-black border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-20">
@@ -15,17 +26,16 @@ export default function Footer() {
             <Link href="/" className="font-display text-2xl font-black text-white mb-4 block">
               Hector<span className="text-brand-yellow">Rail</span>
             </Link>
-            <p className="text-sm text-white/40 leading-relaxed mb-6">
-              Connecting Sweden and Germany with sustainable, high-performance logistics since 2004.
-            </p>
+            <p className="text-sm text-white/40 leading-relaxed mb-6">{description}</p>
             <div className="flex gap-3">
-              {['in', 'tw', 'fb'].map((s) => (
+              {socials.map((s) => (
                 <a
-                  key={s}
-                  href="#"
+                  key={s.key}
+                  href={s.href}
+                  aria-label={s.label}
                   className="w-8 h-8 border border-white/20 flex items-center justify-center text-xs text-white/40 hover:border-brand-yellow hover:text-brand-yellow transition-colors"
                 >
-                  {s}
+                  {s.key}
                 </a>
               ))}
             </div>

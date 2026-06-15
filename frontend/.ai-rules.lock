@@ -1,0 +1,66 @@
+# Managed by ai-rules-sync. Edit only to change update_policy per file.
+schema_version: 1
+rules_version: 2.7.0
+installed_at: 2026-06-10T11:59:06Z
+cli_version: 1.2.6
+adapters:
+    - claude
+stacks:
+    - auto-detect
+files:
+    - target: .claude/core-rules.md
+      source: core/core-rules.md
+      source_version: 3.1.1
+      sha256: bae34184af43e0f0f127f34cc72bae145a367694fb2435e6fc49ed8ad238cdf9
+      base_sha256: bae34184af43e0f0f127f34cc72bae145a367694fb2435e6fc49ed8ad238cdf9
+      customized: false
+      conflicted: false
+      update_policy: auto
+    - target: .claude/jamstack-rules.md
+      source: stacks/jamstack-rules.md
+      source_version: 2.0.1
+      sha256: e45d4e59a71e40672fd012a1f8578394a928848c02efa6258480da787b3d796c
+      base_sha256: e45d4e59a71e40672fd012a1f8578394a928848c02efa6258480da787b3d796c
+      customized: false
+      conflicted: false
+      update_policy: auto
+    - target: .claude/nextjs-rules.md
+      source: stacks/nextjs-rules.md
+      source_version: 2.0.1
+      sha256: ca56b7b3caa4d29c8113c3f9be55a982aabf81658efd81220df5907a94b182bf
+      base_sha256: ca56b7b3caa4d29c8113c3f9be55a982aabf81658efd81220df5907a94b182bf
+      customized: false
+      conflicted: false
+      update_policy: auto
+    - target: .claude/node-rules.md
+      source: stacks/node-rules.md
+      source_version: 1.2.0
+      sha256: a027658489cc0c1c0bc6885017ace0592667444eafbdda6e045ddb3de5d1c01e
+      base_sha256: a027658489cc0c1c0bc6885017ace0592667444eafbdda6e045ddb3de5d1c01e
+      customized: false
+      conflicted: false
+      update_policy: auto
+    - target: .claude/react-rules.md
+      source: stacks/react-rules.md
+      source_version: 1.0.0
+      sha256: 4c24ced41407bd24338c3b638bf1c834dc5798c6c9a4f69f5cd6d49665b35a5f
+      base_sha256: 4c24ced41407bd24338c3b638bf1c834dc5798c6c9a4f69f5cd6d49665b35a5f
+      customized: false
+      conflicted: false
+      update_policy: auto
+    - target: .claude/tailwind-css-rules.md
+      source: stacks/tailwind-css-rules.md
+      source_version: 1.0.0
+      sha256: 412c276cbea381758e5357406c8886b6c7605165a83c2991e1ad1ce621dc0c82
+      base_sha256: 412c276cbea381758e5357406c8886b6c7605165a83c2991e1ad1ce621dc0c82
+      customized: false
+      conflicted: false
+      update_policy: auto
+    - target: CLAUDE.md
+      source: ""
+      source_version: 2.7.0
+      sha256: c2e745cfa3f534fd914264b34317dadf939161e21c65e86f388b896aacd2145b
+      base_sha256: c2e745cfa3f534fd914264b34317dadf939161e21c65e86f388b896aacd2145b
+      customized: false
+      conflicted: false
+      update_policy: auto
