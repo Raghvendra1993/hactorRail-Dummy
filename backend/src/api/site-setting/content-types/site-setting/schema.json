@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_setting",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global site settings: contact info, metadata, social links, company description"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteTitle": { "type": "string" },
+    "siteDescription": { "type": "text" },
+    "companyDescription": { "type": "text" },
+    "addressSe": { "type": "string" },
+    "addressDe": { "type": "string" },
+    "email": { "type": "string" },
+    "phone": { "type": "string" },
+    "contactResponseTime": { "type": "string" },
+    "socialLinkedIn": { "type": "string" },
+    "socialTwitter": { "type": "string" },
+    "socialFacebook": { "type": "string" },
+    "careerBenefits": { "type": "json" }
+  }
+}

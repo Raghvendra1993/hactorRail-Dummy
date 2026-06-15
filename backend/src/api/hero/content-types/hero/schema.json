@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "hero",
+  "info": {
+    "singularName": "hero",
+    "pluralName": "heroes",
+    "displayName": "Hero Section",
+    "description": "Homepage hero section content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "headline1": { "type": "string" },
+    "headline2": { "type": "string" },
+    "headline3": { "type": "string" },
+    "subtitle": { "type": "text" },
+    "cta1Text": { "type": "string" },
+    "cta1Link": { "type": "string" },
+    "cta2Text": { "type": "string" },
+    "cta2Link": { "type": "string" },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

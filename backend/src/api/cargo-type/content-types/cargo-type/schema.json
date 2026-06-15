@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cargo_types",
+  "info": {
+    "singularName": "cargo-type",
+    "pluralName": "cargo-types",
+    "displayName": "Cargo Type",
+    "description": "Types of cargo transported (Timber, Steel, Chemicals, etc.)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "text"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

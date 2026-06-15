@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "principles",
+  "info": {
+    "singularName": "principle",
+    "pluralName": "principles",
+    "displayName": "Principle",
+    "description": "Core company principles (Safety First, Dedicated Capacity, etc.)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "number": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "desc": {
+      "type": "text"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

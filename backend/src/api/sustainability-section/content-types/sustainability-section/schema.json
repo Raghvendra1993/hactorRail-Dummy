@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "sustainability_section",
+  "info": {
+    "singularName": "sustainability-section",
+    "pluralName": "sustainability-sections",
+    "displayName": "Sustainability Section",
+    "description": "Sustainability page section content and metrics"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heading": { "type": "string" },
+    "body1": { "type": "text" },
+    "body2": { "type": "text" },
+    "reportLabel": { "type": "string" },
+    "reportUrl": { "type": "string" },
+    "metrics": { "type": "json" }
+  }
+}
